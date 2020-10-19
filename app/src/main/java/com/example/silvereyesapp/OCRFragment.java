@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,11 +33,14 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 public class OCRFragment extends Fragment {
     final String TAG = getClass().getSimpleName();
-    Button cameraBtn, btn_speech;
+    Button cameraBtn, btnToggleCamera,btn_speech;
 
     private TessBaseAPI mTess; //Tess API reference
     String datapath = ""; //언어 데이터가 있는 경로
@@ -48,18 +52,20 @@ public class OCRFragment extends Fragment {
 
     private CameraView cameraView;
     private static final int INPUT_SIZE = 224;
-
+    private ImageView imageViewResult;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_ocr, container, false);
 
+        btnToggleCamera = (Button) view.findViewById(R.id.btnToggleCamera);
         cameraBtn = (Button) view.findViewById(R.id.camera_button);
         btn_speech = (Button) view.findViewById(R.id.tts_button);
         edit_readText = (TextView) view.findViewById(R.id.OCRTextView);
         edit_readText.setMovementMethod(new ScrollingMovementMethod());
         cameraView = (CameraView) view.findViewById(R.id.cameraView);
+        imageViewResult = view.findViewById(R.id.imageView);
 
         /*
         imageView = (ImageView) view.findViewById(R.id.imageview);
@@ -114,22 +120,9 @@ public class OCRFragment extends Fragment {
 
             @Override
             public void onImage(CameraKitImage cameraKitImage) {
-                image = cameraKitImage.getBitmap();
-
-                //이미지 디코딩을 위한 초기화
-                image = BitmapFactory.decodeResource(getResources(), R.drawable.sample);
-
-                String OCRresult = null;
-                mTess.setImage(image);
-                OCRresult = mTess.getUTF8Text();
-                edit_readText.setText(OCRresult);
-
-                //TTS 기능
-                String data = edit_readText.getText().toString();
-                int speechStatus = textToSpeech.speak(data, TextToSpeech.QUEUE_FLUSH, null);
-                if(speechStatus == TextToSpeech.ERROR){
-                    Log.e("TTS", "Error in converting Text to Speech!");
-                }
+                Bitmap bitmap = cameraKitImage.getBitmap();
+                bitmap = Bitmap.createScaledBitmap(bitmap, INPUT_SIZE, INPUT_SIZE, false);
+                imageViewResult.setImageBitmap(bitmap);
             }
 
             @Override
@@ -137,11 +130,25 @@ public class OCRFragment extends Fragment {
             }
         });
 
-        cameraBtn.setOnClickListener(new View.OnClickListener() {
+        btnToggleCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cameraView.toggleFacing();
-                //processImage(v);
+                if (imageViewResult.getVisibility() == View.VISIBLE) {
+                    imageViewResult.setVisibility(View.GONE);
+                    cameraView.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
+        cameraView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cameraView.captureImage();
+                if(imageViewResult.getVisibility() == View.GONE){
+                    imageViewResult.setVisibility(View.VISIBLE);
+                    cameraView.setVisibility(View.GONE);
+                    imageViewResult.bringToFront();
+                }
             }
         });
 
@@ -227,5 +234,4 @@ public class OCRFragment extends Fragment {
         super.onPause();
         cameraView.stop();
     }
-
 }

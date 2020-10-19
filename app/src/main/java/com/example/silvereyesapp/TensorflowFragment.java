@@ -1,5 +1,6 @@
 package com.example.silvereyesapp;
 
+import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
@@ -21,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.googlecode.tesseract.android.TessBaseAPI;
 import com.wonderkiln.camerakit.CameraKitError;
 import com.wonderkiln.camerakit.CameraKitEvent;
 import com.wonderkiln.camerakit.CameraKitEventListener;
@@ -28,6 +30,12 @@ import com.wonderkiln.camerakit.CameraKitImage;
 import com.wonderkiln.camerakit.CameraKitVideo;
 import com.wonderkiln.camerakit.CameraView;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.Executor;
@@ -43,8 +51,9 @@ public class TensorflowFragment extends Fragment {
     private Executor executor = Executors.newSingleThreadExecutor();
     private TextView textViewResult;
     private TextToSpeech textToSpeech;
-    private Button btnDetectObject, btnToggleCamera, btn_speech;
+    private Button btnDetectObject,btnToggleCamera, btn_speech;
     private CameraView cameraView;
+    private ImageView imageViewResult;
 
     @Nullable
     @Override
@@ -53,10 +62,10 @@ public class TensorflowFragment extends Fragment {
         cameraView = (CameraView) view.findViewById(R.id.cameraView);
         textViewResult = view.findViewById(R.id.textViewResult);
         textViewResult.setMovementMethod(new ScrollingMovementMethod());
-
         btnToggleCamera = view.findViewById(R.id.btnToggleCamera);
         btnDetectObject = view.findViewById(R.id.btnDetectObject);
         btn_speech = view.findViewById(R.id.btn_speech);
+        imageViewResult = view.findViewById(R.id.imageView);
 
         //tts 기능
         //TTS를 생성하고 OnlnitListener로 초기화 한다.
@@ -93,7 +102,7 @@ public class TensorflowFragment extends Fragment {
             public void onImage(CameraKitImage cameraKitImage) {
                 Bitmap bitmap = cameraKitImage.getBitmap();
                 bitmap = Bitmap.createScaledBitmap(bitmap, INPUT_SIZE, INPUT_SIZE, false);
-                //imageViewResult.setImageBitmap(bitmap);
+                imageViewResult.setImageBitmap(bitmap);
                 final List<Classifier.Recognition> results = classifier.recognizeImage(bitmap);
                 String tmp = results.toString();
                 String object = tmp.substring(6,tmp.indexOf(")")+1);
@@ -112,17 +121,26 @@ public class TensorflowFragment extends Fragment {
             }
         });
 
-        btnToggleCamera.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                cameraView.toggleFacing();
-            }
-        });
-
         btnDetectObject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 cameraView.captureImage();
+                if(imageViewResult.getVisibility() == View.GONE){
+                    imageViewResult.setVisibility(View.VISIBLE);
+                    cameraView.setVisibility(View.GONE);
+                    imageViewResult.bringToFront();
+                }
+            }
+        });
+
+        btnToggleCamera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (imageViewResult.getVisibility() == View.VISIBLE) {
+                    imageViewResult.setVisibility(View.GONE);
+                    cameraView.setVisibility(View.VISIBLE);
+                    textViewResult.setText("");
+                }
             }
         });
 
