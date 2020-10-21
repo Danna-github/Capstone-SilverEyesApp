@@ -1,9 +1,6 @@
 package com.example.silvereyesapp;
 
 import android.Manifest;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -24,7 +21,7 @@ public class MypageFragment extends Fragment {
     //asking permission
     private static final int MY_PERMISSIONS_REQUEST_RECEIVE_SMS = 0;
     private static final String SMS_RECEIVED = "android.provider.Telephony.SMS_RECEIVED";
-    TextView messageTV, numberTV;
+    static TextView messageTV, numberTV;
 
 
     @Nullable
@@ -34,16 +31,6 @@ public class MypageFragment extends Fragment {
 
         messageTV = view.findViewById(R.id.message_text);
         numberTV = view.findViewById(R.id.message_phone);
-
-        MyReceiver receiver = new MyReceiver(){
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                super.onReceive(context, intent);
-                messageTV.setText(msg);
-                numberTV.setText(phoneNo);
-            }
-        };
-
 
         //check if the permission is not granted
         if(ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.RECEIVE_SMS)!= PackageManager.PERMISSION_GRANTED)
@@ -55,8 +42,6 @@ public class MypageFragment extends Fragment {
                 ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.RECEIVE_SMS}, MY_PERMISSIONS_REQUEST_RECEIVE_SMS);
             }
         }
-
-
 
         return view;
     }

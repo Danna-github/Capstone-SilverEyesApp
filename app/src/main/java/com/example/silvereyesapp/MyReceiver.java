@@ -7,6 +7,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.telephony.SmsMessage;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MyReceiver extends BroadcastReceiver {
@@ -42,7 +43,12 @@ public class MyReceiver extends BroadcastReceiver {
                     msg = messages[i].getMessageBody();
                     phoneNo = messages[i].getOriginatingAddress();
                 }
-                Toast.makeText(context, "Message: "+msg+"\nNumber: "+phoneNo,Toast.LENGTH_LONG).show();
+                TextView tv = MypageFragment.messageTV;
+                TextView numtv = MypageFragment.numberTV;
+                tv.setText(msg);
+                numtv.setText(phoneNo);
+
+                //Toast.makeText(context, "Message: "+msg+"\nNumber: "+phoneNo,Toast.LENGTH_LONG).show();
             }
         }
     }

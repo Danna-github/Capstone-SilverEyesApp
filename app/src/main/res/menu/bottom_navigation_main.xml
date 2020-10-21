@@ -11,7 +11,7 @@
         android:title="글씨보기"/>
 
     <item
-        android:id="@+id/action_mypage"
+        android:id="@+id/action_sms"
         android:icon="@drawable/ic_mypage"
-        android:title="마이페이지"/>
+        android:title="문자듣기"/>
 </menu>
