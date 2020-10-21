@@ -100,8 +100,8 @@ public class TensorflowFragment extends Fragment {
             @Override
             public void onImage(CameraKitImage cameraKitImage) {
                 Bitmap bitmap = cameraKitImage.getBitmap();
-                bitmap = Bitmap.createScaledBitmap(bitmap, INPUT_SIZE, INPUT_SIZE, false);
                 imageViewResult.setImageBitmap(bitmap);
+                bitmap = Bitmap.createScaledBitmap(bitmap, INPUT_SIZE, INPUT_SIZE, false);
                 final List<Classifier.Recognition> results = classifier.recognizeImage(bitmap);
                 String tmp = results.toString();
                 String object = tmp.substring(6,tmp.indexOf(")")+1);

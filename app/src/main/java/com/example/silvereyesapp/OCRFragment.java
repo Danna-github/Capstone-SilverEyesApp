@@ -3,6 +3,7 @@ package com.example.silvereyesapp;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.text.method.ScrollingMovementMethod;
@@ -120,8 +121,15 @@ public class OCRFragment extends Fragment {
             @Override
             public void onImage(CameraKitImage cameraKitImage) {
                 Bitmap bitmap = cameraKitImage.getBitmap();
-                bitmap = Bitmap.createScaledBitmap(bitmap, INPUT_SIZE, INPUT_SIZE, false);
                 imageViewResult.setImageBitmap(bitmap);
+                //bitmap = Bitmap.createScaledBitmap(bitmap, INPUT_SIZE, INPUT_SIZE, true);
+
+                //image = BitmapFactory.decodeResource(getResources(), bitmap.getGenerationId());
+
+                String OCRresult = null;
+                mTess.setImage(bitmap);
+                OCRresult = mTess.getUTF8Text();
+                edit_readText.setText(OCRresult);
             }
 
             @Override
