@@ -62,7 +62,6 @@ public class TensorflowFragment extends Fragment {
         cameraView = (CameraView) view.findViewById(R.id.cameraView);
         textViewResult = view.findViewById(R.id.textViewResult);
         textViewResult.setMovementMethod(new ScrollingMovementMethod());
-        btnToggleCamera = view.findViewById(R.id.btnToggleCamera);
         btnDetectObject = view.findViewById(R.id.btnDetectObject);
         btn_speech = view.findViewById(R.id.btn_speech);
         imageViewResult = view.findViewById(R.id.imageView);
@@ -124,25 +123,20 @@ public class TensorflowFragment extends Fragment {
         btnDetectObject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cameraView.captureImage();
-                if(imageViewResult.getVisibility() == View.GONE){
+                if(imageViewResult.getVisibility() == View.GONE) {
+                    imageViewResult.setImageResource(R.drawable.ic_camera);
+                    cameraView.captureImage();
                     imageViewResult.setVisibility(View.VISIBLE);
                     cameraView.setVisibility(View.GONE);
                     imageViewResult.bringToFront();
-                }
-            }
-        });
-
-        btnToggleCamera.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (imageViewResult.getVisibility() == View.VISIBLE) {
+                }else if (imageViewResult.getVisibility() == View.VISIBLE) {
                     imageViewResult.setVisibility(View.GONE);
                     cameraView.setVisibility(View.VISIBLE);
                     textViewResult.setText("");
                 }
             }
         });
+
 
         btn_speech.setOnClickListener(new View.OnClickListener() {
             @Override

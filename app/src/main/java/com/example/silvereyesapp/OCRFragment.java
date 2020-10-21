@@ -59,7 +59,6 @@ public class OCRFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_ocr, container, false);
 
-        btnToggleCamera = (Button) view.findViewById(R.id.btnToggleCamera);
         cameraBtn = (Button) view.findViewById(R.id.camera_button);
         btn_speech = (Button) view.findViewById(R.id.tts_button);
         edit_readText = (TextView) view.findViewById(R.id.OCRTextView);
@@ -130,24 +129,18 @@ public class OCRFragment extends Fragment {
             }
         });
 
-        btnToggleCamera.setOnClickListener(new View.OnClickListener() {
-            @Override
+        cameraBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                if (imageViewResult.getVisibility() == View.VISIBLE) {
-                    imageViewResult.setVisibility(View.GONE);
-                    cameraView.setVisibility(View.VISIBLE);
-                }
-            }
-        });
-
-        cameraView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                cameraView.captureImage();
-                if(imageViewResult.getVisibility() == View.GONE){
+                if (imageViewResult.getVisibility() == View.GONE) {
+                    imageViewResult.setImageResource(R.drawable.ic_camera);
+                    cameraView.captureImage();
                     imageViewResult.setVisibility(View.VISIBLE);
                     cameraView.setVisibility(View.GONE);
                     imageViewResult.bringToFront();
+                } else if (imageViewResult.getVisibility() == View.VISIBLE) {
+                    imageViewResult.setVisibility(View.GONE);
+                    cameraView.setVisibility(View.VISIBLE);
+                    edit_readText.setText("");
                 }
             }
         });

@@ -19,7 +19,8 @@
         android:id="@+id/cameraView"
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:layout_gravity="center|top" />
+        android:layout_gravity="center|top"
+        android:visibility="visible"/>
 
 
     <LinearLayout
@@ -38,17 +39,7 @@
             android:textColor="@android:color/black" />
     </LinearLayout>
 
-    <Button
-        android:id="@+id/btnToggleCamera"
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_marginBottom="80dp"
-        android:layout_gravity="center|bottom"
-        android:text="사진 찍기"
-        android:textAllCaps="false"
-        android:textColor="@android:color/black"
-        android:background= "#EEC352"
-        android:visibility="visible" />
+
     <Button
         android:id="@+id/camera_button"
         android:layout_width="match_parent"
