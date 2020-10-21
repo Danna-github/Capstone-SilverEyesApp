@@ -3,9 +3,12 @@ package com.example.silvereyesapp;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,6 +18,8 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import java.util.Locale;
+
 
 public class MypageFragment extends Fragment {
 
@@ -22,6 +27,8 @@ public class MypageFragment extends Fragment {
     private static final int MY_PERMISSIONS_REQUEST_RECEIVE_SMS = 0;
     private static final String SMS_RECEIVED = "android.provider.Telephony.SMS_RECEIVED";
     static TextView messageTV, numberTV;
+    Button tts_btn;
+    private TextToSpeech textToSpeech;
 
 
     @Nullable
@@ -31,6 +38,27 @@ public class MypageFragment extends Fragment {
 
         messageTV = view.findViewById(R.id.message_text);
         numberTV = view.findViewById(R.id.message_phone);
+        tts_btn = view.findViewById(R.id.tts_btn);
+
+        //TTS를 생성하고 OnlnitListener로 초기화 한다.
+        textToSpeech = new TextToSpeech(getContext().getApplicationContext(), new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if(status == TextToSpeech.SUCCESS) {
+                    //작업 성공
+                    int language = textToSpeech.setLanguage(Locale.US); //언어 설정
+                    if(language == TextToSpeech.LANG_MISSING_DATA || language == TextToSpeech.LANG_NOT_SUPPORTED) {
+                        Log.e("TTS", "The Language is not supported!");
+                    } else {
+                        Log.i("TTS", "Language is not supported!");
+                    }
+                    Log.i("TTS", "Initialization success.");
+                } else {
+                    //작업 실패
+                    Toast.makeText(getContext().getApplicationContext(), "TTS Initialization failed!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
         //check if the permission is not granted
         if(ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.RECEIVE_SMS)!= PackageManager.PERMISSION_GRANTED)
@@ -42,6 +70,17 @@ public class MypageFragment extends Fragment {
                 ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.RECEIVE_SMS}, MY_PERMISSIONS_REQUEST_RECEIVE_SMS);
             }
         }
+
+        tts_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String data = messageTV.getText().toString();
+                int speechStatus = textToSpeech.speak(data, TextToSpeech.QUEUE_FLUSH, null);
+                if(speechStatus == TextToSpeech.ERROR){
+                    Log.e("TTS", "Error in converting Text to Speech!");
+                }
+            }
+        });
 
         return view;
     }
