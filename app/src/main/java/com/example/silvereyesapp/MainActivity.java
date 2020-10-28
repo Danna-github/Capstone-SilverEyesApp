@@ -2,7 +2,6 @@ package com.example.silvereyesapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -18,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
     private FragmentTransaction ft;
     private OCRFragment OCRfrag;
     private TensorflowFragment Tensorflowfrag;
-    private MypageFragment Mypagefrag;
+    private MessageFragment Mypagefrag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         });
         OCRfrag = new OCRFragment();
         Tensorflowfrag = new TensorflowFragment();
-        Mypagefrag = new MypageFragment();
+        Mypagefrag = new MessageFragment();
         setFrag(1); //첫 Fragment 화면을 무엇으로 지정해줄 것인지 선택
 
     }

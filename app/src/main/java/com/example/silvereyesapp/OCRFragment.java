@@ -2,8 +2,6 @@ package com.example.silvereyesapp;
 
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.text.method.ScrollingMovementMethod;
@@ -34,14 +32,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.List;
 import java.util.Locale;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 
 public class OCRFragment extends Fragment {
     final String TAG = getClass().getSimpleName();
-    Button cameraBtn, btnToggleCamera,btn_speech;
+    Button cameraBtn, btn_speech;
 
     private TessBaseAPI mTess; //Tess API reference
     String datapath = ""; //언어 데이터가 있는 경로
@@ -122,7 +117,7 @@ public class OCRFragment extends Fragment {
             public void onImage(CameraKitImage cameraKitImage) {
                 Bitmap bitmap = cameraKitImage.getBitmap();
                 imageViewResult.setImageBitmap(bitmap);
-                //bitmap = Bitmap.createScaledBitmap(bitmap, INPUT_SIZE, INPUT_SIZE, true);
+                bitmap = Bitmap.createScaledBitmap(bitmap, INPUT_SIZE, INPUT_SIZE, true);
 
                 //image = BitmapFactory.decodeResource(getResources(), bitmap.getGenerationId());
 
@@ -130,6 +125,12 @@ public class OCRFragment extends Fragment {
                 mTess.setImage(bitmap);
                 OCRresult = mTess.getUTF8Text();
                 edit_readText.setText(OCRresult);
+
+                String data = edit_readText.getText().toString();
+                int speechStatus = textToSpeech.speak(data, TextToSpeech.QUEUE_FLUSH, null);
+                if(speechStatus == TextToSpeech.ERROR){
+                    Log.e("TTS", "Error in converting Text to Speech!");
+                }
             }
 
             @Override

@@ -12,30 +12,30 @@
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="400dp"
         android:visibility="gone"
         tools:srcCompat="@drawable/sample" />
 
     <com.wonderkiln.camerakit.CameraView
         android:id="@+id/cameraView"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="400dp"
         android:layout_gravity="center|top" >
     </com.wonderkiln.camerakit.CameraView>
 
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="center|top"
-        android:layout_marginTop="320dp"
+        android:layout_marginTop="400dp"
         android:gravity="center"
         android:orientation="horizontal">
 
         <TextView
             android:id="@+id/textViewResult"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="100dp"
             android:textSize="30dp"
             android:fadeScrollbars="false"
             android:maxLines="15"
@@ -46,24 +46,25 @@
     <Button
         android:id="@+id/btnDetectObject"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_marginBottom="40dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="55dp"
         android:layout_gravity="center|bottom"
-        android:text="물체 감지"
+        android:text="물체 촬영"
         android:textAllCaps="false"
         android:textColor="@android:color/black"
         android:background= "#EEC352"
-        android:visibility="visible" />
+        android:visibility="visible"
+        android:textSize="12pt"/>
 
     <Button
         android:id="@+id/btn_speech"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="50dp"
         android:layout_gravity="center|bottom"
         android:text="다시 듣기"
         android:textAllCaps="false"
         android:textColor="@android:color/black"
         android:background= "#EEC352"
         android:visibility="visible"
-        />
+        android:textSize="12pt" />
 </FrameLayout>

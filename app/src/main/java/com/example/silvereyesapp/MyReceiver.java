@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.telephony.SmsMessage;
 import android.util.Log;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class MyReceiver extends BroadcastReceiver {
 
@@ -43,8 +42,8 @@ public class MyReceiver extends BroadcastReceiver {
                     msg = messages[i].getMessageBody();
                     phoneNo = messages[i].getOriginatingAddress();
                 }
-                TextView tv = MypageFragment.messageTV;
-                TextView numtv = MypageFragment.numberTV;
+                TextView tv = MessageFragment.messageTV;
+                TextView numtv = MessageFragment.numberTV;
                 tv.setText(msg);
                 numtv.setText(phoneNo);
 

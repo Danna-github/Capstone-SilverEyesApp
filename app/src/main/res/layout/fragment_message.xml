@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:paddingBottom="16dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="16dp">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
         android:text="Message Receiver"
         android:textSize="20pt"/>
+
     <TextView
         android:layout_marginTop="100dp"
         android:id="@+id/message_text"
@@ -22,15 +26,22 @@
         android:id="@+id/message_phone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:layout_gravity="center|bottom"
+        android:layout_marginBottom="60dp"
         android:text="발신자"
         android:textSize="20pt"/>
 
+
+
     <Button
         android:id="@+id/tts_btn"
-        android:layout_marginTop="100dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="문자듣기"
-        android:layout_gravity="center"/>
-</LinearLayout>
+        android:layout_height="50dp"
+        android:layout_gravity="center|bottom"
+        android:text="문자 듣기"
+        android:textAllCaps="false"
+        android:textColor="@android:color/black"
+        android:background= "#EEC352"
+        android:visibility="visible"
+        android:textSize="12pt" />
+</FrameLayout>

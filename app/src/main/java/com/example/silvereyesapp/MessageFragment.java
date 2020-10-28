@@ -21,7 +21,7 @@ import androidx.fragment.app.Fragment;
 import java.util.Locale;
 
 
-public class MypageFragment extends Fragment {
+public class MessageFragment extends Fragment {
 
     //asking permission
     private static final int MY_PERMISSIONS_REQUEST_RECEIVE_SMS = 0;
@@ -34,7 +34,7 @@ public class MypageFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_mypage, container, false);
+        View view = inflater.inflate(R.layout.fragment_message, container, false);
 
         messageTV = view.findViewById(R.id.message_text);
         numberTV = view.findViewById(R.id.message_phone);
@@ -46,7 +46,7 @@ public class MypageFragment extends Fragment {
             public void onInit(int status) {
                 if(status == TextToSpeech.SUCCESS) {
                     //작업 성공
-                    int language = textToSpeech.setLanguage(Locale.US); //언어 설정
+                    int language = textToSpeech.setLanguage(Locale.KOREAN); //언어 설정
                     if(language == TextToSpeech.LANG_MISSING_DATA || language == TextToSpeech.LANG_NOT_SUPPORTED) {
                         Log.e("TTS", "The Language is not supported!");
                     } else {
