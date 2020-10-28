@@ -2,6 +2,8 @@ package com.example.silvereyesapp;
 
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.text.method.ScrollingMovementMethod;
@@ -119,7 +121,11 @@ public class OCRFragment extends Fragment {
                 imageViewResult.setImageBitmap(bitmap);
                 bitmap = Bitmap.createScaledBitmap(bitmap, INPUT_SIZE, INPUT_SIZE, true);
 
-                //image = BitmapFactory.decodeResource(getResources(), bitmap.getGenerationId());
+                //image = BitmapFactory.decodeResource(getResources(), R.drawable.sample);
+
+                //BitmapDrawable drawable = (BitmapDrawable) imageViewResult.getDrawable();
+                //bitmap = drawable.getBitmap();
+
 
                 String OCRresult = null;
                 mTess.setImage(bitmap);
