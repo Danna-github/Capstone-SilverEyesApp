@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
     private FragmentTransaction ft;
     private OCRFragment OCRfrag;
     private TensorflowFragment Tensorflowfrag;
-    private MessageFragment Mypagefrag;
+    private MessageFragment Messagefrag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.action_ocr:
                         setFrag(1);
                         break;
-                    case R.id.action_mypage:
+                    case R.id.action_message:
                         setFrag(2);
                         break;
                 }
@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         });
         OCRfrag = new OCRFragment();
         Tensorflowfrag = new TensorflowFragment();
-        Mypagefrag = new MessageFragment();
+        Messagefrag = new MessageFragment();
         setFrag(1); //첫 Fragment 화면을 무엇으로 지정해줄 것인지 선택
 
     }
@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
                 ft.replace(R.id.mainactivity_framelayout, OCRfrag).commit();
                 break;
             case 2:
-                ft.replace(R.id.mainactivity_framelayout, Mypagefrag).commit();
+                ft.replace(R.id.mainactivity_framelayout, Messagefrag).commit();
                 break;
         }
     }
